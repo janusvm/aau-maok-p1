@@ -1,0 +1,321 @@
+\documentclass[12pt,oneside,final]{article}
+
+% Info -------------------------------------------------------------------------
+\title{%
+  Optimering af gaslager\\
+  \large P1-projektforslag \\
+  Matematik-{\O}konomi
+}
+\author{
+  Janus Valberg-Madsen\\
+  \href{mailto:janus@math.aau.dk}{\texttt{<janus@math.aau.dk>}}
+}
+\date{\today}
+
+
+% Packages ---------------------------------------------------------------------
+% Basics
+\usepackage{etex}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[danish]{babel}
+\usepackage{natbib}
+\usepackage{hyperref}
+
+% Style
+\usepackage[charter]{mathdesign}
+\usepackage{inconsolata}
+\usepackage[labelfont=bf,font=it]{caption}
+\usepackage[margin=2cm]{geometry}
+\usepackage[shortlabels]{enumitem}
+
+% Math
+\usepackage{mathtools}
+\usepackage{bbm}
+\usepackage{bm}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\1}{\mathbbm{1}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\vzero}{\bm{0}}
+\newcommand{\vx}{\bm{x}}
+\newcommand{\vb}{\bm{b}}
+\newcommand{\vc}{\bm{c}}
+\newcommand{\vs}{\bm{s}}
+
+% Graphics
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,backgrounds}
+\tikzstyle{point} = [text=white,fill,shape=circle,minimum size=5pt,inner sep=0pt]
+
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+  \begin{tikzpicture}[scale=1.5]
+    \node [point] (a) at (0,2) {};
+    \node [point] (z) at (6,2) {};
+    \foreach \t in {1,...,5} {
+      \foreach \q in {0,...,4} {
+        \node [point] (\t\q) at (\t,\q) {};
+      }
+    }
+
+    \begin{scope}[on background layer]
+      \foreach \q in {0,...,4} {
+        \draw[black!30] (a) -- (1\q);
+        \draw[black!30] (5\q) -- (z);
+        \foreach \t [evaluate=\t as \nextt using int(\t+1)] in {1,...,4} {
+          \foreach \nq [evaluate=\nq as \nextq using int(\q+\nq)] in {-2,-1,0,1,2} {
+            \ifthenelse{\nextq > 4 \OR \nextq < 0}{}{
+              \draw[black!30] (\t\q) -- (\nextt\nextq);
+            }
+          }
+        }
+      }
+      \draw [red,line width=2pt] (a) -- (11) -- (23) -- (34) -- (42) -- (51) -- (z);
+      \foreach \p in {a,11,23,34,42,51,z} \node [point,fill=red,minimum size=10pt] at (\p) {};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+
+\tableofcontents
+
+% --------------------------------------------------------------------------------------------------
+\clearpage
+\section{Basisproblem}
+
+Forestil jer, at vi kontrollerer et gaslager---en fysisk enhed, hvori vi kan lagre naturgas---i en given periode på et år.
+Med ``kontrollerer'' menes her, at vi ikke selv ejer enheden, men vi har indgået i en kontrakt med ejeren om at leje enheden.
+Vi er interesserede i at maksimere profitten (eller minimere tabene), som opnås ved at købe og sælge gas i løbet af lejeperioden.
+
+Antag hertil, at vi har en såkaldt \emph{forward}-kurve for prisen på gas, dvs.\ en række kontrakter med modparter på markedet, som giver os forudbestemte priser på gassen til hver tidspunkt i lejeperioden.
+Til hvert tidspunkt i denne periode kan vi købe eller sælge en begrænset mængde gas, og der er øvre og nedre grænser på størrelsen af gaslageret (enten fysiske eller kontraktbestemte).
+Når lejeperioden udløber, køber ejeren af lageret den efterladte mængde gas af os.
+Vi ser desuden bort fra de omkostninger, der måtte være i en sådan lejekontrakt.
+
+
+\subsection{Matematisk formulering}
+
+Lad \(q_{t}\) angive mængden af gas (målt i \(\epsilon\times\)MWh, hvor \(\epsilon\) er størrelsen af en ``enhed'' gas) lagret til tid \(t\) (hvor \(t = 0\) er i dag, \(t = 1\) er næste tidsskridt osv.\ indtil slutningen af lejeperioden, \(T\)) og lad \(\Delta q_{t} = q_{t} - q_{t-1}\) angive ændringen i lageret fra den ene dag til den anden.
+Givet parametrene
+%
+\begin{itemize}
+\item \(q_{0}\), antal enheder af gas på lageret i starten af perioden
+\item \(q_{\min}\) og \(q_{\max}\), den nedre og øvre grænse på mængden, der kan være på lageret
+\item \(u_{\max}, i_{\max} \in \N\), antal enheder, der hhv.\ kan tages ud og sættes ind mellem to tidsperioder
+\item \(p_{t}\), en forward-pris i euro på en enhed gas, defineret for \(t \in \{1, \dotsc, T\}\)
+\item \(r\), en fast, årlig diskonteringsrente
+\end{itemize}
+%
+maksimér nutidsværdien af profitten under \(\Delta q_{t}\), dvs.\
+%
+\begin{equation}
+  \label{eq:1}
+  \max_{\Delta q_{t}}
+  \left\{
+    - \sum_{t = 1}^{T} \e^{-r\tfrac{t}{T}} \Delta q_{t} p_{t} + \e^{-r} q_{T} p_{T}
+  \right\} ,
+\end{equation}
+under bibetingelserne
+\begin{enumerate}
+\item \(q_{\min} \leq q_{t} \leq q_{\max}\)
+\item \(\Delta q_{t} \in
+    \left\{
+    -u_{\max}, -u_{\max}+1, \dotsc, -1, 0, 1, \dotsc, i_{\max} - 1, i_{\max}
+    \right\}\)
+\end{enumerate}
+%
+for \(t \in \{1, \dotsc, T\}\), hvor \(q_{t} = q_{0} + \sum_{s = 1}^{t} \Delta q_{s}\) som nævnt ovenfor angiver mængden lagret til tid \(t\).
+
+
+% --------------------------------------------------------------------------------------------------
+\clearpage
+\subsection{Løsning af problemet med grafteori}
+
+Eftersom antallet af tidsperioder og antallet af mulige mængder gas på lageret begge er diskrete, dvs.\ \(t \in \{1, \dotsc, T\}\) og \(q_{t} \in \{q_{\min}, q_{\min}+1, \dotsc, q_{\max}\}\), kan problemet repræsenteres som en \emph{orienteret, vægtet graf}, som på skitsen nedenfor på Figur~\ref{fig:graph}:
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}[scale=1.5,-{Latex[angle'=60,length=4pt]},shorten >=1pt]
+
+    % Nodes
+    \foreach \t [evaluate=\t as \myt using int(\t+1)] in {1, 2, ..., 5} {
+      \foreach \q in {0, 1, ..., 3} {
+        \node[point] at (1.25*\t,1.25*\q) (p\t\q) {};
+      }
+    }
+
+    % Arrows
+    \foreach \t [evaluate=\t as \nextt using int(\t+1)] in {1, 2, ..., 4} {
+      \foreach \q in {0, 1, ..., 3} {
+        \foreach \nq [evaluate=\nq as \nextq using int(\q+\nq)] in {-1, 0, 1} {
+          \ifthenelse{\nextq > 3 \OR \nextq < 0}{}{
+            \draw (p\t\q) -- (p\nextt\nextq);
+          }
+        }
+      }
+    }
+
+    % q0
+    \node[point] at (0,1.25) (q0) {};
+    \foreach \q in {0, 1, 2} {
+      \draw (q0) -- (p1\q);
+    }
+
+    \begin{scope}[color=red,very thick,-{Latex[angle'=65,length=6pt]},shorten >=0pt]
+      \draw (q0)  -- (p12);
+      \draw (p12) -- (p22);
+      \draw (p22) -- (p33);
+      \draw (p33) -- (p42);
+      \draw (p42) -- (p51);
+    \end{scope}
+
+    % Labels
+    \node at (q0) (lq0) [label=left:\(q_{0}\)] {};
+    \node at (p10) (qmin) [label=left:\(q_{\min}\)] {};
+    \node at (p13) (qmax) [label=left:\(q_{\max}\)] {};
+    \node (t1) [below of=p10,yshift=1em] {\(t=1\)};
+    \node (tT) [below of=p50,yshift=1em] {\(t=T\)};
+    \node at (p12) (q1) [label=above:\(q_{1}\)] {};
+    \node at (p22) (q2) [label=above:\(q_{2}\)] {};
+    \node at (p33) (q3) [label=below:\(q_{3}\)] {};
+    \node at (p42) (q4) [label=below:\(q_{4}\)] {};
+    \node at (p51) (q5) [label=below:\(q_{5}\)] {};
+
+  \end{tikzpicture}
+  \captionsetup{width=0.7\textwidth}
+  \caption{
+    \small
+    Skitse af problemgrafen (kantvægte er udeladt for læsbarhed), med \(u_{\max} = i_{\max} = 1\).
+    Et eksempel på en vej gennem grafen er indtegnet med rødt.
+    Opadgående pile betegner indkøb af gas, mens nedadgående piler betegner salg.
+  }
+  \label{fig:graph}
+\end{figure}
+
+Vælges kantvægtene til at repræsentere udgifter og indtjening på hhv. køb og salg af gas, så er dette et \emph{længste vej}-problem, og det kan løses med algoritmer fra grafteori.
+Hertil findes algoritmer, der kan finde den længste (eller korteste) vej igennem en graf af generel struktur, men I opfordres her til at tænke over, hvordan strukturen i dette specifikke problem kan udnyttes til at designe en mere specialiseret algoritme.
+Som en del af projektet skal I således implementere en sådan algoritme i et programmeringssprog som Julia, Python eller lignende.
+
+I genkender måske formen af dette problem som et \emph{heltalsprogrammerings}-problem (eng.: \emph{integer linear programming} (ILP)), dvs.\ et optimeringsproblem, som kan opskrives på standardformen
+%
+\begin{alignat*}{2}
+ & \text{maksimér}            &\quad  & \vc^{\top} \vx  \\
+ & \text{under bibetingelser} &\quad  & A \vx + \vs = \vb , \\
+ &                            &\quad  & \vs \geq \vzero , \\
+ &                            &\quad  & \vx \geq \vzero , \\
+ & \text{og}                  &\quad  & \vx \in \Z^{n} ,
+\end{alignat*}
+%
+hvor \(\vc,\vb\) og \(A\) er givne parametre, og hvor \(\vx\) og \(\vs\) er variable.
+Dermed kan det ganske vist løses med software-pakker som GLPK, Excel Solver Add-in, osv., men I anbefales kun at bruge sådanne programmer til at tjekke resultaterne fra jeres egen algoritme.
+En af udvidelserne i næste afsnit gør desuden objektfunktionen ikke-lineær, og så kan disse metoder ikke længere anvendes.
+
+
+% --------------------------------------------------------------------------------------------------
+\clearpage
+\section{Udvidelser til problemet}
+
+Når I har løst basisproblemet, kan I arbejde videre med nedenstående udvidelser.
+Overvej gerne hertil, hvordan I gør jeres implementation af løsningsalgoritmen generel nok til at løse problemer af alle typer (basisproblem, med én udvidelse, med begge udvidelser).
+
+
+\subsection{Tidsafhængige begrænsninger}
+
+Grænser på lageret vil i mere realistiske modeller for dette problem ikke være faste henover et år;
+for eksempel vil \(q_{\min}\) typisk være højere om vinteren for at kunne imødekomme den øgede efterspørgsel på strøm, hvis produktionen er lav en dag pga.\ fejl på et produktionsanlæg.
+Derfor er den første udvidelse til problem at løse det med tidsafhængige begrænsninger, dvs.\
+%
+\begin{enumerate}
+\item \(q_{\min,t} \leq q_{t} \leq q_{\max,t}\)
+\item \(\Delta q_{t} \in
+    \left\{
+    -u_{\max,t} , -u_{\max,t}+1 , \dotsc, -1, 0, 1, \dotsc, i_{\max,t} - 1 , i_{\max,t}
+    \right\}\)
+\end{enumerate}
+%
+for alle \(t\).
+Med andre ord, så afhænger \(q_{\min}, q_{\max}, u_{\max}, i_{\max}\) fra basisproblemet nu af \(t\).
+
+
+\subsection{Slutvolumen og straffaktor}
+
+Som en del af lejekontrakten i problemet kan det tænkes, at vi forpligter os til at aflevere lageret med en aftalt mængde gas, \(q_{\mathrm{goal}}\).
+Hvis ikke vi rammer denne værdi præcist, bliver prisen, som modparten køber den lagrede gas for, reduceret med en \emph{straffaktor}, og vi får dermed ikke den fulde pris for gassen.
+I denne udvidelse er dermed givet to nye parametre,
+%
+\begin{itemize}
+\item \(\alpha\), en straffaktor for prisen (\(0 < \alpha < 1\))
+\item \(q_{\mathrm{goal}}\), den aftalte mængde gas lagret til tid \(T\)
+\end{itemize}
+%
+og maksimeringsproblemet bliver således
+%
+\begin{equation}
+  \max_{\Delta q_{t}}
+  \left\{
+    - \sum_{t = 1}^{T} \e^{-r\tfrac{t}{T}} \Delta q_{t} p_{t} + \e^{-r} q_{T}p_{T}
+    \left(
+      1 - \alpha \cdot \1 [q_{T} \neq q_{\mathrm{goal}}]
+    \right)
+  \right\} ,
+\end{equation}
+%
+hvor \(\1[\cdot]\) er en indikatorfunktion, dvs.\ den er lig med 1, når udsagnet (her, at \(q_{T} \neq q_{\mathrm{goal}}\)) er sandt, og 0 ellers.
+Dermed er værdien af udtrykket i parentesen 1, hvis vi rammer \(q_{\mathrm{goal}}\) præcist, og \(1 - \alpha\), hvis vi ikke gør.
+
+I denne sammenhæng kunne det være relevant at undersøge, om der findes tilfælde, hvor det kan betale sig for os \emph{ikke} at ramme \(q_{\mathrm{goal}}\), og hvilken effekt størrelsen af \(\alpha\) har.
+
+
+% ------------------------------------------------------------------------------
+\clearpage
+
+\section{Data til test af algoritme}
+
+\subsection{Basisproblem}
+
+Til at starte med kan I tage udgangspunkt i følgende eksempler på parametre for basisproblemet:
+%
+\begin{align*}
+  q_{\min} &= 0 & q_{0} &= 5 \\
+  q_{\max} &= 10 & r &= 0.05 \\
+  u_{\max} &= 4 &  T &= 12 \\
+  i_{\max} &= 4 &  (p_{t})_{t=1}^{T} &= (20, 22, 25, 18, 15, 15, 20, 19, 21, 12, 22, 25)
+\end{align*}
+%
+Dette svarer til en lejeperiode på et år med priser givet for hver måned.
+
+
+\subsection{Udvidelser}
+
+Med udgangspunkt i samme \(q_{0}, r, T\) og priser som i basisproblemet, er følgende eksempel for parametre for udvidelserne givet:
+%
+\begin{align*}
+  q_{\mathrm{goal}} & = 5   & (q_{\min,t})_{t=1}^{T} & = (0, 0, 0, 4, 4, 6, 6, 4, 4, 0, 0, 0)          \\
+  \alpha            & = 0.7 & (q_{\max,t})_{t=1}^{T} & = (10, 10, 10, 10, 8, 8, 8, 8, 10, 10, 10, 10)  \\
+                    &       & (u_{\max,t})_{t=1}^{T} & = (4, 4, 2, 2, 1, 1, 1, 1, 2, 2, 4, 4)          \\
+                    &       & (i_{\max,t})_{t=1}^{T} & = (4, 4, 2, 2, 1, 1, 1, 1, 2, 2, 4, 4)
+\end{align*}
+
+
+% ------------------------------------------------------------------------------
+\addcontentsline{toc}{section}{Litteratur}
+\begin{thebibliography}{99}
+\bibitem[Rosen(2013)]{book:Rosen}
+  Kenneth~H. Rosen.
+  \newblock \emph{Discrete {M}athematics and {I}ts {A}pplitcations}.
+  \newblock McGraw-Hill, 7 edition, 2013.
+\end{thebibliography}
+
+\end{document}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
