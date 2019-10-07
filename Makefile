@@ -7,7 +7,7 @@ PDFFILES := $(TEXFILES:.tex=.pdf)
 topic: $(PDFFILES)
 
 %.pdf: %.tex
-	latexmk -pdf -quiet -cd $<
+	cd topic && latexmk -pdf -quiet $(notdir $<)
 
 clean:
 	cd topic && latexmk -C
