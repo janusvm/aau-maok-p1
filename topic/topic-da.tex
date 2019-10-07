@@ -90,7 +90,7 @@
 \section{Basisproblem}
 
 Forestil jer, at vi kontrollerer et gaslager---en fysisk enhed, hvori vi kan lagre naturgas---i en given periode på et år.
-Med ``kontrollerer'' menes her, at vi ikke selv ejer enheden, men vi har indgået i en kontrakt med ejeren om at leje enheden.
+Med ``kontrollerer'' menes her, at vi ikke selv ejer enheden, men at vi har indgået en kontrakt med ejeren om at leje enheden.
 Vi er interesserede i at maksimere profitten (eller minimere tabene), som opnås ved at købe og sælge gas i løbet af lejeperioden.
 
 Antag hertil, at vi har en såkaldt \emph{forward}-kurve for prisen på gas, dvs.\ en række kontrakter med modparter på markedet, som giver os forudbestemte priser på gassen til hver tidspunkt i lejeperioden.
@@ -112,7 +112,7 @@ Givet parametrene
 \item \(r\), en fast, årlig diskonteringsrente
 \end{itemize}
 %
-maksimér nutidsværdien af profitten under \(\Delta q_{t}\), dvs.\
+maksimér nutidsværdien af profitten mht.\ \(\Delta q_{t}\), dvs.\
 %
 \begin{equation}
   \label{eq:1}
@@ -229,7 +229,7 @@ Overvej gerne hertil, hvordan I gør jeres implementation af løsningsalgoritmen
 
 Grænser på lageret vil i mere realistiske modeller for dette problem ikke være faste henover et år;
 for eksempel vil \(q_{\min}\) typisk være højere om vinteren for at kunne imødekomme den øgede efterspørgsel på strøm, hvis produktionen er lav en dag pga.\ fejl på et produktionsanlæg.
-Derfor er den første udvidelse til problem at løse det med tidsafhængige begrænsninger, dvs.\
+Derfor er den første udvidelse til problemet at løse det med tidsafhængige begrænsninger, dvs.\
 %
 \begin{enumerate}
 \item \(q_{\min,t} \leq q_{t} \leq q_{\max,t}\)
