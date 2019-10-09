@@ -9,13 +9,12 @@
   Matematik-{\O}konomi
 }
 \author{
-  Janus Valberg-Madsen \href{mailto:janus@math.aau.dk}{\texttt{<janus@math.aau.dk>}},\\
+  Janus Valberg-Madsen \href{mailto:janus@math.aau.dk}{\texttt{<janus@math.aau.dk>}}\\
   vejleder for grupperne XXXX og YYYY
 }
 \date{14.\ oktober 2019}
 
 % Packages
-\usepackage{etex}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[danish]{babel}
@@ -23,7 +22,6 @@
 \usepackage{hyperref}
 \usepackage[charter]{mathdesign}
 \usepackage{inconsolata}
-\usepackage[labelfont=bf,font=it]{caption}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage[shortlabels]{enumitem}
 \usepackage[dvipsnames]{xcolor}
@@ -31,13 +29,13 @@
 
 % Settings
 \usetikzlibrary{calendar,backgrounds}
-\tikzstyle{afternoon} = [fill=SkyBlue,shape=rectangle,minimum size=17pt]
-\tikzstyle{morning}   = [fill=Lavender,shape=rectangle,minimum size=17pt]
-\tikzstyle{special}   = [fill=YellowGreen,shape=rectangle,minimum size=17pt]
-\tikzstyle{asym}      = [fill=SkyBlue,shape=rectangle,minimum size=10pt]
-\tikzstyle{msym}      = [fill=Lavender,shape=rectangle,minimum size=10pt]
-\tikzstyle{ssym}      = [fill=YellowGreen,shape=rectangle,minimum size=10pt]
-\newcommand{\nodemark}[1]{\tikz\node[#1] at (0,0) {};}
+\tikzstyle{afternoon} = [shape=rectangle,minimum size=1.5em,fill=SkyBlue]
+\tikzstyle{morning}   = [shape=rectangle,minimum size=1.5em,fill=Lavender]
+\tikzstyle{special}   = [shape=rectangle,minimum size=1.5em,fill=YellowGreen]
+\tikzstyle{asym}      = [shape=rectangle,minimum size=1.0em,fill=SkyBlue]
+\tikzstyle{msym}      = [shape=rectangle,minimum size=1.0em,fill=Lavender]
+\tikzstyle{ssym}      = [shape=rectangle,minimum size=1.0em,fill=YellowGreen]
+\newcommand{\nodemark}[1]{\tikz[baseline=-0.5ex]\node[#1] at (0,0) {};}
 \setlist{itemsep=0pt}
 
 
