@@ -1,0 +1,163 @@
+% Original source and additional resources is available on:
+% https://github.com/janusvm/aau-maok-p1
+
+\documentclass[12pt,a4paper,oneside,final]{article}
+
+% PREAMBLE ---------------------------------------------------------------------
+\title{
+  Vejledning på P1\\
+  Matematik-{\O}konomi
+}
+\author{
+  Janus Valberg-Madsen \href{mailto:janus@math.aau.dk}{\texttt{<janus@math.aau.dk>}}\\
+  vejleder for grupperne XXXX og YYYY
+}
+\date{14.\ oktober 2019}
+
+% Packages
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[danish]{babel}
+\usepackage[danish]{translator}
+\usepackage{hyperref}
+\usepackage[charter]{mathdesign}
+\usepackage{inconsolata}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[shortlabels]{enumitem}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
+
+% Settings
+\usetikzlibrary{calendar,backgrounds}
+\tikzstyle{afternoon} = [shape=rectangle,minimum size=1.5em,fill=SkyBlue]
+\tikzstyle{morning}   = [shape=rectangle,minimum size=1.5em,fill=Lavender]
+\tikzstyle{special}   = [shape=rectangle,minimum size=1.5em,fill=YellowGreen]
+\tikzstyle{asym}      = [shape=rectangle,minimum size=1.0em,fill=SkyBlue]
+\tikzstyle{msym}      = [shape=rectangle,minimum size=1.0em,fill=Lavender]
+\tikzstyle{ssym}      = [shape=rectangle,minimum size=1.0em,fill=YellowGreen]
+\newcommand{\nodemark}[1]{\tikz[baseline=-0.5ex]\node[#1] at (0,0) {};}
+\setlist{itemsep=0pt}
+
+
+% MAIN -------------------------------------------------------------------------
+\begin{document}
+\maketitle
+
+\renewcommand{\abstractname}{Om dette dokument}
+\begin{abstract}
+  Dette dokument beskriver mine forventninger for, hvordan samspillet mellem vejleder og projektgruppe skal foregå på første studieår for Matematik-Økonomi.
+  En oversigt gives over, hvad de studerende skal gøre forud for og under vejledermøder, hvornår sådanne møder kan forekomme, og hvilke former for hjælp, jeg kan yde.
+\end{abstract}
+
+
+\section{Vejledermøder}
+\subsection{Tidspunkter}
+\label{subsec:tidspunkter}
+Der er mulighed for at have op til \textbf{\'et vejledermøde \`a højst halvanden time om ugen}, og I kan vælge imellem de markederede dage i kalenderen nedenfor:
+\begin{center}
+  \begin{tikzpicture}[every calendar/.style={week list,month label above centered,day text={\%d=}}]
+    \calendar (oct) [dates=2019-10-01 to 2019-10-last] at (0,0) if (weekend) [Gray];
+    \calendar (nov) [dates=2019-11-01 to 2019-11-last] at (5.5,0) if (weekend) [Gray];
+    \calendar (dec) [dates=2019-12-01 to 2019-12-last] at (11,0) if (weekend) [Gray];
+
+    % Available dates
+    \begin{scope}[on background layer]
+      % October
+      \foreach \d in {18,23,25,28} \node[afternoon] at (oct-2019-10-\d) {};
+      \foreach \d in {21} \node[morning] at (oct-2019-10-\d) {};
+      % November
+      \foreach \d in {20,22,27,29} \node[afternoon] at (nov-2019-11-\d) {};
+      \foreach \d in {04,11} \node[morning] at (nov-2019-11-\d) {};
+      \foreach \d in {01,08,13} \node[special] at (nov-2019-11-\d) {};
+      % December
+      \foreach \d in {09,10} \node[afternoon] at (dec-2019-12-\d) {};
+      \foreach \d in {05} \node[morning] at (dec-2019-12-\d) {};
+      \foreach \d in {02,04} \node[special] at (dec-2019-12-\d) {};
+    \end{scope}
+  \end{tikzpicture}
+\end{center}
+hvor
+\begin{itemize}[label={},wide,labelindent=0pt,topsep=1ex]
+\item \nodemark{msym} angiver dage, hvor jeg er tilgængelig \textbf{om formiddagen (9:00--12:00)}
+\item \nodemark{asym} angiver dage, hvor jeg er tilgængelig \textbf{om eftermiddagen (12:30--15:30)}
+\item \nodemark{ssym} angiver dage, hvor jeg er tilgængelig \textbf{kun hvis \emph{begge} mine grupper ønsker at have et møde den pågældende dag}.
+  Dette skyldes at jeg disse dage ikke har andre ærinder på Basis, så jeg ville skulle tage derud udelukkende for at holde vejledermøder.
+\end{itemize}
+
+\clearpage
+\subsection{Booking af møder}
+Det er op til jer at indkalde til vejledermøder, når I har brug for dem.
+Mødeindkaldelser skal ske via kalenderinvitation på \url{https://mail.aau.dk}:
+\begin{enumerate}[itemsep=0pt]
+\item Opret et møde på en dag, hvor jeg er tilgængelig (ifølge Afsnit \ref{subsec:tidspunkter})
+\item Tilføj mig (\texttt{janus@math.aau.dk}) og alle gruppemedlemmer som mødedeltagere
+\item Vælg et tidsinterval på op til 1½ time, sådan at det stadig er muligt for mig at holde et møde samme dag med den anden gruppe, hvis de ønsker det
+\item Vedhæft arbejdsblade i PDF-format, og skriv læsevejledningen til dem ind i mødebeskrivelsen (se Afsnit \ref{sec:arbejdsblade} for en uddybelse af dette)
+\item Skriv dagsordenen og spørgsmål ind i mødebeskrivelsen
+\item Angiv jeres grupperum i lokale-feltet
+\end{enumerate}
+Indkaldelsen skal være afsendt \textbf{senest kl.\ 16 to dage før den ønskede mødedag} for at sikre, at jeg har en chance for at nå at læse arbejdsbladene.
+Hvis mødet ligger om mandagen, vil jeg dog kræve, at indkaldelsen foreligger allerede \textbf{fredag kl.\ 16}.
+
+Ønsker I et vejledermøde på en \nodemark{ssym}-dag, skal møderne for begge grupper ligge i forlængelse af hinanden.
+Sørg i alle tilfælde for at koordinere mødetider med den anden gruppe.
+
+\subsection{Dagsorden}
+Alle mødeindkaldelser skal indeholde en dagsorden for mødet.
+I kan med fordel bruge følgende liste som en skabelon for, hvad en sådan dagsorden kunne indeholde:
+\begin{enumerate}[itemsep=0pt]
+\item Mødets formål (hvad mødes vi for?)
+\item Status på gruppearbejdet (hvad har I hver især lavet siden sidst, hvordan fungerer gruppearbejdet, har I haft nogle problemer, overholder I tidsplanen, etc.)
+\item Svar på spørgsmål (hvis I har angivet dem i mødeindkaldelsen)
+\item Kommentarer til arbejdsbladene (hvis I har vedhæftet dem i mødeindkaldelsen)
+\item Plan for næste uge (hvad skal I lave indtil næste gang vi ses?)
+\item Eventuelt (andre ting, som I gerne vil have vendt med mig)
+\item Evaluering af mødet (blev mødets formål opfyldt?)
+\end{enumerate}
+Der må selvfølgelig gerne være flere punkter, men jeg vil anbefale, at I altid som minimum har de ovenstående med, så I får så meget ud af møderne som muligt.
+
+\subsection{Referat}
+\'En af gruppemedlemmerne skal tage referat af vejledermødet, som efter mødet sendes til hele gruppen og mig via email.
+Undgå venligst at vedhæfte referatet som fil, men skriv istedet indholdet direkte ind i emailen (dette gør det bl.a.\ lettere at søge i referater senere).
+
+
+\clearpage
+\section{Arbejdsblade}
+\label{sec:arbejdsblade}
+Med \emph{arbejdsblade} menes der en kompileret PDF-fil med seneste, gennemrettede udgave af jeres projekt, og en \emph{læsevejledning} hertil er en liste over de dele/afsnit, som I gerne vil gerne have jeg kigger på, samt begrundelser herfor.
+
+Sagt med andre ord skal I have overvejet de dele, I sender til mig;
+hvis jeg skal læse et afsnit, skal det være gennemgået (inkl.\ for stave- og grammatikfejl) af \emph{hele gruppen}.
+Dette kan ofte medføre, at I selv kan løse problemer eller afklare spørgsmål i gruppen, da I får brugt hinanden.
+I skal desuden angive, \emph{hvorfor} jeg skal læse og kommentere på de enkelte dele---så får I selv tænkt over, hvad det er I ikke forstår, og jeg kan bruge min tid målrettet.
+
+
+\section{Hvad jeg kan hjælpe med}
+Foruden det faglige indhold i rapporten og det organisatoriske i arbejdsprocessen, kan jeg også hjælpe med tekniske ting omkring
+\begin{itemize}
+\item \LaTeX{} og dokument-/projektstruktur
+\item Git og GitHub
+\item Programmering i Julia, R eller Python
+\end{itemize}
+Jeg hjælper \emph{ikke} med: Overleaf, Microsoft Office, Dropbox/Google Drive/OneDrive, Maple, MATLAB, eller andre proprietære CAS-værktøjer.
+I må selvfølgelig stadig godt bruge dem, blot I ikke forventer, at jeg kan svare på spørgsmål eller løse problemer, der involverer dem.
+
+\subsection{Brugen af GitHub}
+Hvis I har jeres projekt under versionsstyring på \href{https://github.com}{GitHub} (det er ikke et krav, men det vil være en fordel for jer at få kendskab til), kan I invitere mig som \emph{Collaborator}---min bruger hedder \href{https://github.com/janusvm}{\texttt{janusvm}}.
+Så vil jeg kunne kommentere direkte på kode, oprette/deltage i Issues, og have adgang til seneste version af jeres projekt.
+Dette kan gøre det nemmere for mig at hjælpe jer, hvis I f.eks.\ har problemer med \LaTeX{} og har brug for hjælp til fejlfinding.
+
+\section{Korrespondance}
+Hvis I har spørgsmål om småting, som ikke kan vente til næste vejledermøde, kan I kontakte mig på email.
+Jeg bestræber mig på at besvare emails inden for \'en arbejdsdag, men bemærk, at jeg som udgangspunkt ikke læser emails uden for arbejdstiden, medmindre det drejer som om en uventet nødssituation (gruppesamarbejdet er brudt sammen, projektet vil ikke kompilere på afleveringsdagen, el.lign.).
+
+Alle emails til mig skal have hele gruppen på CC.
+Sørg for at trykke \emph{Svar til alle}, når I besvarer emails fra mig, så alle i gruppen altid har adgang til hele tråden af en korrespondance.
+Derudover må I meget gerne underskrive alle emails med jeres gruppenummer, så jeg lettere kan holde styr på samtalerne med de forskellige grupper.
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

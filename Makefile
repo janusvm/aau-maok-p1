@@ -1,15 +1,15 @@
 # GNU Make rules
 # ------------------------------------------------------------------------------
 
-TEXFILES := $(wildcard topic/*.tex)
+TEXFILES := $(wildcard tex/*.tex)
 PDFFILES := $(TEXFILES:.tex=.pdf)
 
-topic: $(PDFFILES)
+tex: $(PDFFILES)
 
 %.pdf: %.tex
-	cd topic && latexmk -pdf -quiet $(notdir $<)
+	cd tex && latexmk -pdf -quiet $(notdir $<)
 
 clean:
-	cd topic && latexmk -C
+	cd tex && latexmk -C
 
-.PHONY: topic clean
+.PHONY: tex clean
