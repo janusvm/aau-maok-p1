@@ -14,29 +14,11 @@
 }
 \date{14.\ oktober 2019}
 
-% Packages
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[danish]{babel}
-\usepackage[danish]{translator}
-\usepackage{hyperref}
-\usepackage[charter]{mathdesign}
-\usepackage{inconsolata}
-\usepackage[margin=2.5cm]{geometry}
-\usepackage[shortlabels]{enumitem}
-\usepackage[dvipsnames]{xcolor}
-\usepackage{tikz}
+\input{pre/pkgs}
 
-% Settings
-\usetikzlibrary{calendar,backgrounds}
-\tikzstyle{afternoon} = [shape=rectangle,minimum size=1.5em,fill=SkyBlue]
-\tikzstyle{morning}   = [shape=rectangle,minimum size=1.5em,fill=Lavender]
-\tikzstyle{special}   = [shape=rectangle,minimum size=1.5em,fill=YellowGreen]
-\tikzstyle{asym}      = [shape=rectangle,minimum size=1.0em,fill=SkyBlue]
-\tikzstyle{msym}      = [shape=rectangle,minimum size=1.0em,fill=Lavender]
-\tikzstyle{ssym}      = [shape=rectangle,minimum size=1.0em,fill=YellowGreen]
-\newcommand{\nodemark}[1]{\tikz[baseline=-0.5ex]\node[#1] at (0,0) {};}
-\setlist{itemsep=0pt}
+\input{pre/cmds}
+
+\input{pre/conf}
 
 
 % MAIN -------------------------------------------------------------------------
