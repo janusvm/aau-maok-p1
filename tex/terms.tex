@@ -37,26 +37,7 @@
 \label{subsec:tidspunkter}
 Der er mulighed for at have op til \textbf{\'et vejledermøde \`a højst halvanden time om ugen}, og I kan vælge imellem de markederede dage i kalenderen nedenfor:
 \begin{center}
-  \begin{tikzpicture}[every calendar/.style={week list,month label above centered,day text={\%d=}}]
-    \calendar (oct) [dates=2019-10-01 to 2019-10-last] at (0,0) if (weekend) [Gray];
-    \calendar (nov) [dates=2019-11-01 to 2019-11-last] at (5.5,0) if (weekend) [Gray];
-    \calendar (dec) [dates=2019-12-01 to 2019-12-last] at (11,0) if (weekend) [Gray];
-
-    % Available dates
-    \begin{scope}[on background layer]
-      % October
-      \foreach \d in {18,23,25,28} \node[afternoon] at (oct-2019-10-\d) {};
-      \foreach \d in {21} \node[morning] at (oct-2019-10-\d) {};
-      % November
-      \foreach \d in {20,22,27,29} \node[afternoon] at (nov-2019-11-\d) {};
-      \foreach \d in {04,11} \node[morning] at (nov-2019-11-\d) {};
-      \foreach \d in {01,08,13} \node[special] at (nov-2019-11-\d) {};
-      % December
-      \foreach \d in {09,10} \node[afternoon] at (dec-2019-12-\d) {};
-      \foreach \d in {05} \node[morning] at (dec-2019-12-\d) {};
-      \foreach \d in {02,04} \node[special] at (dec-2019-12-\d) {};
-    \end{scope}
-  \end{tikzpicture}
+  \input{tikz/meeting-cal.tikz}
 \end{center}
 hvor
 \begin{itemize}[label={},wide,labelindent=0pt,topsep=1ex]

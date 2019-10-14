@@ -25,32 +25,11 @@
 % MAIN -------------------------------------------------------------------------
 \begin{document}
 \maketitle
+
 \begin{center}
-  \begin{tikzpicture}[scale=1.5]
-    \node [point] (a) at (0,2) {};
-    \node [point] (z) at (6,2) {};
-    \foreach \t in {1,...,5} {
-      \foreach \q in {0,...,4} {
-        \node [point] (\t\q) at (\t,\q) {};
-      }
-    }
-    \begin{scope}[on background layer]
-      \foreach \q in {0,...,4} {
-        \draw[black!30] (a) -- (1\q);
-        \draw[black!30] (5\q) -- (z);
-        \foreach \t [evaluate=\t as \nextt using int(\t+1)] in {1,...,4} {
-          \foreach \nq [evaluate=\nq as \nextq using int(\q+\nq)] in {-2,-1,0,1,2} {
-            \ifthenelse{\nextq > 4 \OR \nextq < 0}{}{
-              \draw[black!30] (\t\q) -- (\nextt\nextq);
-            }
-          }
-        }
-      }
-      \draw [red,line width=2pt] (a) -- (11) -- (23) -- (34) -- (42) -- (51) -- (z);
-      \foreach \p in {a,11,23,34,42,51,z} \node [point,fill=red,minimum size=10pt] at (\p) {};
-    \end{scope}
-  \end{tikzpicture}
+  \input{tikz/problem-graph-fp.tikz}
 \end{center}
+
 \tableofcontents
 
 
@@ -99,43 +78,7 @@ Eftersom antallet af tidsperioder og antallet af mulige mængder gas på lageret
 
 \begin{figure}[htbp]
   \centering
-  \begin{tikzpicture}[scale=1.5,-{Latex[angle'=60,length=4pt]},shorten >=1pt]
-    \foreach \t [evaluate=\t as \myt using int(\t+1)] in {1, 2, ..., 5} {
-      \foreach \q in {0, 1, ..., 3} {
-        \node[point] at (1.25*\t,1.25*\q) (p\t\q) {};
-      }
-    }
-    \foreach \t [evaluate=\t as \nextt using int(\t+1)] in {1, 2, ..., 4} {
-      \foreach \q in {0, 1, ..., 3} {
-        \foreach \nq [evaluate=\nq as \nextq using int(\q+\nq)] in {-1, 0, 1} {
-          \ifthenelse{\nextq > 3 \OR \nextq < 0}{}{
-            \draw (p\t\q) -- (p\nextt\nextq);
-          }
-        }
-      }
-    }
-    \node[point] at (0,1.25) (q0) {};
-    \foreach \q in {0, 1, 2} {
-      \draw (q0) -- (p1\q);
-    }
-    \begin{scope}[color=red,very thick,-{Latex[angle'=65,length=6pt]},shorten >=0pt]
-      \draw (q0)  -- (p12);
-      \draw (p12) -- (p22);
-      \draw (p22) -- (p33);
-      \draw (p33) -- (p42);
-      \draw (p42) -- (p51);
-    \end{scope}
-    \node at (q0) (lq0) [label=left:\(q_{0}\)] {};
-    \node at (p10) (qmin) [label=left:\(q_{\min}\)] {};
-    \node at (p13) (qmax) [label=left:\(q_{\max}\)] {};
-    \node (t1) [below of=p10,yshift=1em] {\(t=1\)};
-    \node (tT) [below of=p50,yshift=1em] {\(t=T\)};
-    \node at (p12) (q1) [label=above:\(q_{1}\)] {};
-    \node at (p22) (q2) [label=above:\(q_{2}\)] {};
-    \node at (p33) (q3) [label=below:\(q_{3}\)] {};
-    \node at (p42) (q4) [label=below:\(q_{4}\)] {};
-    \node at (p51) (q5) [label=below:\(q_{5}\)] {};
-  \end{tikzpicture}
+  \input{tikz/problem-graph-sketch.tikz}
   \captionsetup{width=0.75\textwidth}
   \caption{
     \small
