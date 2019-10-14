@@ -1,0 +1,24 @@
+\begin{tikzpicture}[scale=1.5]
+  \node [point] (a) at (0,2) {};
+  \node [point] (z) at (6,2) {};
+  \foreach \t in {1,...,5} {
+    \foreach \q in {0,...,4} {
+      \node [point] (\t\q) at (\t,\q) {};
+    }
+  }
+  \begin{scope}[on background layer]
+    \foreach \q in {0,...,4} {
+      \draw[black!30] (a) -- (1\q);
+      \draw[black!30] (5\q) -- (z);
+      \foreach \t [evaluate=\t as \nextt using int(\t+1)] in {1,...,4} {
+        \foreach \nq [evaluate=\nq as \nextq using int(\q+\nq)] in {-2,-1,0,1,2} {
+          \ifthenelse{\nextq > 4 \OR \nextq < 0}{}{
+            \draw[black!30] (\t\q) -- (\nextt\nextq);
+          }
+        }
+      }
+    }
+    \draw [red,line width=2pt] (a) -- (11) -- (23) -- (34) -- (42) -- (51) -- (z);
+    \foreach \p in {a,11,23,34,42,51,z} \node [point,fill=red,minimum size=10pt] at (\p) {};
+  \end{scope}
+\end{tikzpicture}

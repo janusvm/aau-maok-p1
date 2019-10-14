@@ -1,0 +1,48 @@
+% Original source and additional resources is available on:
+% https://github.com/janusvm/aau-maok-p1
+
+\documentclass[12pt,a4paper,oneside,final]{article}
+
+% PREAMBLE ---------------------------------------------------------------------
+\title{
+  Optimering af gaslager\\
+  \large P1-projektforslag \\
+  Matematik-{\O}konomi
+}
+\author{
+  Janus Valberg-Madsen\\
+  \href{mailto:janus@math.aau.dk}{\texttt{<janus@math.aau.dk>}}
+}
+\date{14.\ oktober 2019}
+
+\input{pre/pkgs}
+
+\input{pre/cmds}
+
+\input{pre/conf}
+
+
+% MAIN -------------------------------------------------------------------------
+\begin{document}
+\maketitle
+
+\begin{center}
+  \input{tikz/problem-graph-fp.tikz}
+\end{center}
+
+\tableofcontents
+
+\include{sec/basis}
+
+\include{sec/extensions}
+
+\input{sec/data}
+
+\input{sec/literature}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

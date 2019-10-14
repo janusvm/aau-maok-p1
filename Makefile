@@ -1,15 +1,21 @@
 # GNU Make rules
 # ------------------------------------------------------------------------------
 
-TEXFILES := $(wildcard tex/*.tex)
-PDFFILES := $(TEXFILES:.tex=.pdf)
+TEXMAINS  = tex/topic.tex tex/terms.tex
+TEXINPUT := $(shell find tex -mindepth 2 -type f)
+PDFMAINS := $(TEXMAINS:.tex=.pdf)
+COLMAINS := $(TEXMAINS:.tex=-collated.tex)
 
-tex: $(PDFFILES)
+tex: $(PDFMAINS) $(COLMAINS)
 
-%.pdf: %.tex
-	cd tex && latexmk -pdf -quiet $(notdir $<)
+%.pdf: %.tex $(TEXINPUT)
+	cd $(<D) && latexmk -pdf -bibtex $(<F)
+
+%-collated.tex: %.tex %.pdf
+	cd $(<D) && latexpand --keep-comments --expand-bbl $(<F:.tex=.bbl) $(<F) -o $(@F)
 
 clean:
 	cd tex && latexmk -C
+	rm -f $(COLMAINS)
 
 .PHONY: tex clean
