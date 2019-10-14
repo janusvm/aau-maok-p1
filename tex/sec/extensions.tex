@@ -1,0 +1,43 @@
+\section{Udvidelser til problemet}
+\label{sec:extensions}
+Når I har løst basisproblemet, kan I arbejde videre med nedenstående udvidelser.
+Overvej gerne hertil, hvordan I gør jeres implementation af løsningsalgoritmen generel nok til at løse problemer af alle typer (basisproblem, med én udvidelse, med begge udvidelser).
+
+\subsection{Tidsafhængige begrænsninger}
+\label{subsec:timdep}
+Grænser på lageret vil i mere realistiske modeller for dette problem ikke være faste henover et år;
+for eksempel vil \(q_{\min}\) typisk være højere om vinteren for at kunne imødekomme den øgede efterspørgsel på strøm, hvis produktionen er lav en dag pga.\ fejl på et produktionsanlæg.
+Derfor er den første udvidelse til problemet at løse det med tidsafhængige begrænsninger, dvs.\
+\begin{enumerate}
+\item \(q_{\min,t} \leq q_{t} \leq q_{\max,t}\)
+\item \(\Delta q_{t} \in
+    \left\{
+    -u_{\max,t} , -u_{\max,t}+1 , \dotsc, -1, 0, 1, \dotsc, i_{\max,t} - 1 , i_{\max,t}
+    \right\}\)
+\end{enumerate}
+for alle \(t\).
+Med andre ord, så afhænger \(q_{\min}, q_{\max}, u_{\max}, i_{\max}\) fra basisproblemet nu af \(t\).
+
+\subsection{Slutvolumen og straffaktor}
+\label{subsec:penalty}
+Som en del af lejekontrakten i problemet kan det tænkes, at vi forpligter os til at aflevere lageret med en aftalt mængde gas, \(q_{\mathrm{goal}}\).
+Hvis ikke vi rammer denne værdi præcist, bliver prisen, som modparten køber den lagrede gas for, reduceret med en \emph{straffaktor}, og vi får dermed ikke den fulde pris for gassen.
+I denne udvidelse er dermed givet to nye parametre,
+\begin{itemize}
+\item \(\alpha\), en straffaktor for prisen (\(0 < \alpha < 1\))
+\item \(q_{\mathrm{goal}}\), den aftalte mængde gas lagret til tid \(T\)
+\end{itemize}
+og maksimeringsproblemet bliver således
+\begin{equation}
+  \max_{\Delta q_{t}}
+  \left\{
+    - \sum_{t = 1}^{T} \e^{-r\tfrac{t}{T}} \Delta q_{t} p_{t} + \e^{-r} q_{T}p_{T}
+    \left(
+      1 - \alpha \cdot \1 [q_{T} \neq q_{\mathrm{goal}}]
+    \right)
+  \right\} ,
+\end{equation}
+hvor \(\1[\cdot]\) er en indikatorfunktion, dvs.\ den er lig med 1, når udsagnet (her, at \(q_{T} \neq q_{\mathrm{goal}}\)) er sandt, og 0 ellers.
+Dermed er værdien af udtrykket i parentesen 1, hvis vi rammer \(q_{\mathrm{goal}}\) præcist, og \(1 - \alpha\), hvis vi ikke gør.
+
+I denne sammenhæng kunne det være relevant at undersøge, om der findes tilfælde, hvor det kan betale sig for os \emph{ikke} at ramme \(q_{\mathrm{goal}}\), og hvilken effekt størrelsen af \(\alpha\) har.

@@ -1,0 +1,73 @@
+\section{Basisproblem}
+\label{sec:basis}
+Forestil jer, at vi kontrollerer et gaslager---en fysisk enhed, hvori vi kan lagre naturgas---i en given periode på et år.
+Med ``kontrollerer'' menes her, at vi ikke selv ejer enheden, men at vi har indgået en kontrakt med ejeren om at leje enheden.
+Vi er interesserede i at maksimere profitten (eller minimere tabene), som opnås ved at købe og sælge gas i løbet af lejeperioden.
+
+Antag hertil, at vi har en såkaldt \emph{forward}-kurve for prisen på gas, dvs.\ en række kontrakter med modparter på markedet, som giver os forudbestemte priser på gassen til hver tidspunkt i lejeperioden.
+Til hvert tidspunkt i denne periode kan vi købe eller sælge en begrænset mængde gas, og der er øvre og nedre grænser på størrelsen af gaslageret (enten fysiske eller kontraktbestemte).
+Når lejeperioden udløber, køber ejeren af lageret den efterladte mængde gas af os.
+Vi ser desuden bort fra de omkostninger, der måtte være i en sådan lejekontrakt.
+
+\subsection{Matematisk formulering}
+\label{subsec:mathproblem}
+Lad \(q_{t}\) angive mængden af gas (målt i \(\epsilon\times\)MWh, hvor \(\epsilon\) er størrelsen af en ``enhed'' gas) lagret til tid \(t\) (hvor \(t = 0\) er i dag, \(t = 1\) er næste tidsskridt osv.\ indtil slutningen af lejeperioden, \(T\)) og lad \(\Delta q_{t} = q_{t} - q_{t-1}\) angive ændringen i lageret fra den ene dag til den anden.
+Givet parametrene
+\begin{itemize}
+\item \(q_{0}\), antal enheder af gas på lageret i starten af perioden
+\item \(q_{\min}\) og \(q_{\max}\), den nedre og øvre grænse på mængden, der kan være på lageret
+\item \(u_{\max}, i_{\max} \in \N\), antal enheder, der hhv.\ kan tages ud af og sættes ind på lageret mellem to tidsperioder
+\item \(p_{t}\), en forward-pris i euro på en enhed gas, defineret for \(t \in \{1, \dotsc, T\}\)
+\item \(r\), en fast, årlig diskonteringsrente
+\end{itemize}
+maksimér nutidsværdien af profitten mht.\ \(\Delta q_{t}\), dvs.\
+\begin{equation}
+  \label{eq:1}
+  \max_{\Delta q_{t}}
+  \left\{
+    - \sum_{t = 1}^{T} \e^{-r\tfrac{t}{T}} \Delta q_{t} p_{t} + \e^{-r} q_{T} p_{T}
+  \right\} ,
+\end{equation}
+under bibetingelserne
+\begin{enumerate}
+\item \(q_{\min} \leq q_{t} \leq q_{\max}\)
+\item \(\Delta q_{t} \in
+    \left\{
+    -u_{\max}, -u_{\max}+1, \dotsc, -1, 0, 1, \dotsc, i_{\max} - 1, i_{\max}
+    \right\}\)
+\end{enumerate}
+for \(t \in \{1, \dotsc, T\}\), hvor \(q_{t} = q_{0} + \sum_{s = 1}^{t} \Delta q_{s}\) som nævnt ovenfor er mængden lagret til tid \(t\).
+
+\clearpage
+\subsection{Løsning af problemet med grafteori}
+\label{subsec:graphtheory}
+Eftersom antallet af tidsperioder og antallet af mulige mængder gas på lageret begge er diskrete, dvs.\ \(t \in \{1, \dotsc, T\}\) og \(q_{t} \in \{q_{\min}, q_{\min}+1, \dotsc, q_{\max}\}\), kan problemet repræsenteres som en \emph{orienteret, vægtet graf}, som på skitsen nedenfor på Figur~\ref{fig:graph}:
+
+\begin{figure}[htbp]
+  \centering
+  \input{tikz/problem-graph-sketch.tikz}
+  \captionsetup{width=0.8\textwidth}
+  \caption{
+    \small
+    Skitse af problemgrafen (kantvægte er udeladt for læsbarhed), med \(u_{\max} = i_{\max} = 1\).
+    Et eksempel på en vej gennem grafen er indtegnet med rødt.
+    Opadgående pile betegner indkøb af gas, mens nedadgående piler betegner salg.
+  }
+  \label{fig:graph}
+\end{figure}
+
+Vælges kantvægtene til at repræsentere udgifter og indtjening på hhv. køb og salg af gas, så er dette et \emph{længste vej}-problem, og det kan løses med algoritmer fra grafteori.
+Hertil findes algoritmer, der kan finde den længste (eller korteste) vej igennem en graf af generel struktur, men I opfordres her til at tænke over, hvordan strukturen i dette specifikke problem kan udnyttes til at designe en mere specialiseret algoritme.
+Som en del af projektet skal I således implementere en sådan algoritme i et programmeringssprog som Julia, Python eller lignende.
+
+I genkender måske formen af dette problem som et \emph{heltalsprogrammerings}-problem (eng.: \emph{integer linear programming} (ILP)), dvs.\ et optimeringsproblem, som kan opskrives på standardformen
+\begin{alignat*}{2}
+ & \text{maksimér}            &\quad  & \vc^{\top} \vx  \\
+ & \text{under bibetingelser} &\quad  & A \vx + \vs = \vb , \\
+ &                            &\quad  & \vs \geq \vzero , \\
+ &                            &\quad  & \vx \geq \vzero , \\
+ & \text{og}                  &\quad  & \vx \in \Z^{n} ,
+\end{alignat*}
+hvor \(\vc,\vb\) og \(A\) er givne parametre, og hvor \(\vx\) og \(\vs\) er variable.
+Dermed kan det ganske vist løses med software-pakker som GLPK, Excel Solver Add-in, osv., men I anbefales kun at bruge sådanne programmer til at tjekke resultaterne fra jeres egen algoritme.
+En af udvidelserne i næste afsnit gør desuden objektfunktionen ikke-lineær, og så kan disse metoder ikke længere anvendes.

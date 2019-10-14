@@ -1,0 +1,23 @@
+\section{Data til test af algoritme}
+\label{sec:data}
+
+\subsection{Basisproblem}
+\label{subsec:basisdata}
+Til at starte med kan I tage udgangspunkt i følgende eksempler på parametre for basisproblemet:
+\begin{align*}
+  q_{\min} &= 0 & q_{0} &= 5 \\
+  q_{\max} &= 10 & r &= 0.04 \\
+  u_{\max} &= 4 &  T &= 12 \\
+  i_{\max} &= 4 &  (p_{t})_{t=1}^{T} &= (20, 22, 25, 18, 15, 15, 20, 19, 21, 12, 22, 25)
+\end{align*}
+Dette svarer til en lejeperiode på et år med priser givet for hver måned.
+
+\subsection{Udvidelser}
+\label{subsec:extensionsdata}
+Med udgangspunkt i samme \(q_{0}, r, T\) og priser som i basisproblemet, er følgende eksempel for parametre for udvidelserne givet:
+\begin{align*}
+  q_{\mathrm{goal}} & = 5   & (q_{\min,t})_{t=1}^{T} & = (0, 0, 0, 4, 4, 6, 6, 4, 4, 0, 0, 0)          \\
+  \alpha            & = 0.7 & (q_{\max,t})_{t=1}^{T} & = (10, 10, 10, 10, 8, 8, 8, 8, 10, 10, 10, 10)  \\
+                    &       & (u_{\max,t})_{t=1}^{T} & = (4, 4, 2, 2, 1, 1, 1, 1, 2, 2, 4, 4)          \\
+                    &       & (i_{\max,t})_{t=1}^{T} & = (4, 4, 2, 2, 1, 1, 1, 1, 2, 2, 4, 4)
+\end{align*}
